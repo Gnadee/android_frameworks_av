@@ -74,21 +74,34 @@ struct BufferMeta {
             return;
         }
 
+#ifdef AC100_OMX
         size_t bytesToCopy = header->nFlags & OMX_BUFFERFLAG_EXTRADATA ?
             header->nAllocLen - header->nOffset : header->nFilledLen;
+#endif
         memcpy((OMX_U8 *)mMem->pointer() + header->nOffset,
+#ifdef AC100_OMX
                header->pBuffer + header->nOffset, bytesToCopy);
+#else
+               header->pBuffer + header->nOffset,
+               header->nFilledLen);
+#endif
     }
 
     void CopyToOMX(const OMX_BUFFERHEADERTYPE *header) {
         if (!mCopyToOmx) {
             return;
         }
-
+#ifdef AC100_OMX
         size_t bytesToCopy = header->nFlags & OMX_BUFFERFLAG_EXTRADATA ?
             header->nAllocLen - header->nOffset : header->nFilledLen;
+#endif
         memcpy(header->pBuffer + header->nOffset,
+#ifdef AC100_OMX
                (const OMX_U8 *)mMem->pointer() + header->nOffset, bytesToCopy);
+#else
+               (const OMX_U8 *)mMem->pointer() + header->nOffset,
+               header->nFilledLen);
+#endif
     }
 
     void setGraphicBuffer(const sp<GraphicBuffer> &graphicBuffer) {
