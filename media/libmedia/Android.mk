@@ -70,6 +70,10 @@ LOCAL_SRC_FILES:= \
 
 LOCAL_SRC_FILES += ../libnbaio/roundup.c
 
+ifeq ($(BOARD_NEED_OMX_COMPAT),true)
+    LOCAL_CFLAGS += -DUSE_OMX_COMPAT
+endif
+
 ifeq ($(BOARD_USES_LIBMEDIA_WITH_AUDIOPARAMETER),true)
 LOCAL_SRC_FILES+= \
     AudioParameter.cpp
