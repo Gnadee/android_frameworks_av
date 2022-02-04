@@ -41,6 +41,9 @@ endif
 ifeq ($(BOARD_USES_PROPRIETARY_OMX),SAMSUNG)
 LOCAL_CFLAGS     += -DSAMSUNG_OMX
 endif
+ifeq ($(BOARD_USES_PROPRIETARY_OMX),AC100)
+LOCAL_CFLAGS     += -DAC100_OMX
+endif
 
 LOCAL_MODULE:= libstagefright_omx
 
